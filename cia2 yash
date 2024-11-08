@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Facebook Login</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f2f5;
+            margin: 0;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 400px;
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            margin: auto;
+            margin-top: 100px;
+            text-align: center;
+        }
+
+        h1 {
+            color: #1877F2;
+            margin-bottom: 20px;
+        }
+
+        input[type="email"],
+        input[type="password"],
+        input[type="text"] {
+            width: 100%;
+            padding: 12px;
+            margin: 8px 0;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+
+        .login-btn,
+        .create-account-btn {
+            width: 100%;
+            padding: 12px;
+            background-color: #42B72A;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        .login-btn:hover,
+        .create-account-btn:hover {
+            background-color: #36a420;
+        }
+
+        .error-message {
+            color: red;
+            margin-top: 10px;
+        }
+
+        .link {
+            margin-top: 10px;
+            display: inline-block;
+            color: #1877F2;
+            cursor: pointer;
+        }
+
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container" id="login-container">
+        <h1>Facebook</h1>
+        <form id="login-form">
+            <input type="email" id="email" placeholder="Email or Phone" required><br>
+            <input type="password" id="password" placeholder="Password" required><br>
+            <button type="button" class="login-btn" onclick="login()">Login</button>
+            <div class="error-message" id="error-message"></div>
+            <div class="link" onclick="showCreateAccount()">Create New Account</div>
+        </form>
+    </div>
+
+    <div class="container hidden" id="create-account-container">
+        <h1>Create New Account</h1>
+        <form id="create-account-form">
+            <input type="text" id="first-name" placeholder="First Name" required><br>
+            <input type="text" id="last-name" placeholder="Last Name" required><br>
+            <input type="email" id="new-email" placeholder="Email" required><br>
+            <input type="password" id="new-password" placeholder="Password" required><br>
+            <button type="button" class="create-account-btn" onclick="createAccount()">Create Account</button>
+            <div class="error-message" id="create-error-message"></div>
+            <div class="link" onclick="showLogin()">Back to Login</div>
+        </form>
+    </div>
+
+    <div class="container hidden" id="home-container">
+        <h1>Welcome to Facebook!</h1>
+        <p>You are now logged in.</p>
+        <button class="login-btn" onclick="logout()">Logout</button>
+    </div>
+
+    <script>
+        function login() {
+            var email = document.getElementById("email").value;
+            var password = document.getElementById("password").value;
+            var errorMessage = document.getElementById("error-message");
+
+            // Simple login validation (this would typically be server-side)
+            if (email === "user@example.com" && password === "password") {
+                // Show home container and hide login container
+                document.getElementById("login-container").style.display = "none";
+                document.getElementById("home-container").style.display = "block";
+            } else {
+                errorMessage.innerText = "Invalid email or password!";
+            }
+        }
+
+        function logout() {
+            // Show login container and hide home container
+            document.getElementById("home-container").style.display = "none";
+            document.getElementById("login-container").style.display = "block";
+            document.getElementById("login-form").reset(); // Reset the form
+            document.getElementById("error-message").innerText = ""; // Clear any error messages
+        }
+
+        function showCreateAccount() {
+            document.getElementById("login-container").style.display = "none";
+            document.getElementById("create-account-container").style.display = "block";
+            document.getElementById("create-account-form").reset(); // Reset the create account form
+            document.getElementById("create-error-message").innerText = ""; // Clear any error messages
+        }
+
+        function createAccount() {
+            var firstName = document.getElementById("first-name").value;
+            var lastName = document.getElementById("last-name").value;
+            var newEmail = document.getElementById("new-email").value;
+            var newPassword = document.getElementById("new-password").value;
+            var createErrorMessage = document.getElementById("create-error-message");
+
+            // Here, you would typically send the data to the server to create an account
+            // For now, we'll just show a success message and go back to the login page
+            if (firstName && lastName && newEmail && newPassword) {
+                alert("Account created successfully!");
+                showLogin(); // Go back to login after account creation
+            } else {
+                createErrorMessage.innerText = "Please fill in all fields!";
+            }
+        }
+
+        function showLogin() {
+            document.getElementById("create-account-container").style.display = "none";
+            document.getElementById("login-container").style.display = "block";
+        }
+    </script>
+</body>
+</html>
